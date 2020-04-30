@@ -3,13 +3,15 @@
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
+        "clean": "rimraf ./dist",
         "start": "ng serve",
         "build": "ng build",
-        "test": "ng test",
+        "build:prod": "ng build --prod",
+        "test": "ng test --watch=false --browsers=ChromeHeadlessCustom",
+        "test:watch": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "lib:build": "npm install -g @angular/cli && cd projects/stripe-elements && npm install && ng build --prod",
-        "lib:publish": "cd projects/stripe-elements && npm publish"
+        "build:ci": "npm run clean && npm run build:prod"
     },
     "private": true,
     "dependencies": {
