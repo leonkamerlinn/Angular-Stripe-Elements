@@ -15,4 +15,5 @@ jobs:
           node-version: '13.x'
           registry-url: https://registry.npmjs.org/
       - run: npm run lib:publish
+      - run: cd projects/stripe-elements && npm publish --access public
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

@@ -8,7 +8,7 @@
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "lib:publish": "cd projects/stripe-elements && npm install && ng build --prod && npm publish --access public"
+        "lib:publish": "cd projects/stripe-elements && npm install && ng build --prod"
     },
     "private": true,
     "dependencies": {
