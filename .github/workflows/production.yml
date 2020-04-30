@@ -1,28 +1,32 @@
-name: npm-publish
-on:
-  push:
-    branches:
-      - master # Change this to your default branch
-
+on: push
+name: Build Angular
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-      - run: npm run lib:build
+    strategy:
+      matrix:
+        node-version: [12.x]
 
-  publish-npm:
-    needs: build
-    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v1
+
+      - name: Cache node modules
+        uses: actions/cache@v1
         with:
-          node-version: 12
-          registry-url: https://registry.npmjs.org/
-      - run: npm run lib:publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install and npm run build
+        run: |
+          npm i
+          npm run build:prod
+      - name: Push Build to Releases
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "dist/stripe-elements/*"
+          token: ${{ secrets.NPM_TOKEN }}
