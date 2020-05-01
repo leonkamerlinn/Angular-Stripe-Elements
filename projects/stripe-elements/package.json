@@ -1,19 +1,11 @@
 {
     "name": "stripe-elements",
-    "version": "0.7.0",
+    "version": "0.8.0",
     "author": "Leon Kamerlin",
     "description": "Angular Stripe elements",
     "peerDependencies": {
         "@angular/common": "^9.0.7",
         "@angular/core": "^9.0.7",
-        "tslib": "^1.10.0",
-        "@types/stripe-checkout": "^1.0.3",
-        "@types/stripe-v3": "^3.1.17",
-        "@ngrx/store": "9.1.0",
-        "@ngrx/effects": "^9.1.0"
-    },
-    "devDependencies": {
-        "@types/stripe-checkout": "^1.0.3",
-        "@types/stripe-v3": "^3.1.17"
+        "tslib": "^1.10.0"
     }
 }
