@@ -7,7 +7,7 @@
         "start": "ng serve",
         "build": "ng build",
         "build:prod": "ng build --prod && npm run pack:lib",
-        "publish": "npm publish dist/stripe-elements-X.X.X.tgz",
+        "publish": "npm publish dist/stripe-elements-1.1.0.tgz",
         "pack:lib": "cd dist/stripe-elements && npm pack",
         "test": "ng test --watch=false --browsers=ChromeHeadlessCustom",
         "test:watch": "ng test",
