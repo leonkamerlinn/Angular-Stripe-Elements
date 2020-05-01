@@ -14,7 +14,6 @@
     },
     "devDependencies": {
         "@types/stripe-checkout": "^1.0.3",
-        "@types/stripe-v3": "^3.1.17",
-        "bootstrap": "^4.4.1"
+        "@types/stripe-v3": "^3.1.17"
     }
 }
