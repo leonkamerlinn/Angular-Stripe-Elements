@@ -1,6 +1,6 @@
 {
     "name": "stripe-elements",
-    "version": "0.8.0",
+    "version": "1.0.0",
     "author": "Leon Kamerlin",
     "description": "Angular Stripe elements",
     "peerDependencies": {
