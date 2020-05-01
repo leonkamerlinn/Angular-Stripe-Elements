@@ -2,7 +2,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { StripeElementsModule } from 'stripe-elements';
+import { StripeElementsConfig, StripeElementsModule } from 'stripe-elements';
+import { environment } from '../environments/environment';
+
+const style = {
+    base: {
+        lineHeight: '24px',
+        fontFamily: 'monospace',
+        fontSmoothing: 'antialiased',
+        fontSize: '19px',
+    }
+};
+const stripeConfig: StripeElementsConfig = {
+    stripeKey: environment.stripeKey,
+    api: environment.firebaseEndpoint,
+    elementOptions: {style}
+};
 
 @NgModule({
     declarations: [
@@ -10,7 +25,7 @@ import { StripeElementsModule } from 'stripe-elements';
     ],
     imports: [
         BrowserModule,
-        StripeElementsModule.forRoot({stripeKey: 'hello world'})
+        StripeElementsModule.forRoot(stripeConfig)
     ],
     providers: [],
     bootstrap: [AppComponent]

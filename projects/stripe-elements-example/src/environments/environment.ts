@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+    firebaseEndpoint: 'https://us-central1-smokvicastaging.cloudfunctions.net/api',
+    stripeKey: 'pk_test_8O8TGlrvYKNOWTrxdxOEKqav00ZQlG4owt',
+    production: false
 };
 
 /*

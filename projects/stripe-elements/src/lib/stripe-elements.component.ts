@@ -3,6 +3,8 @@ import { StripeElementsService } from './stripe-elements.service';
 import ConfirmCardPaymentData = stripe.ConfirmCardPaymentData;
 import ElementsOptions = stripe.elements.ElementsOptions;
 import StripePaymentRequestOptions = stripe.paymentRequest.StripePaymentRequestOptions;
+import PaymentIntentResponse = stripe.PaymentIntentResponse;
+import PaymentIntent = stripe.paymentIntents.PaymentIntent;
 
 @Component({
     selector: 'ngrx-stripe-elements',
@@ -18,9 +20,10 @@ export class StripeElementsComponent implements OnInit, AfterViewInit, OnDestroy
     @ViewChild('paymentRequestButtonRef') paymentRequestButtonRef: ElementRef;
 
 
-    @Input() stripeKey = 'pk_test_8O8TGlrvYKNOWTrxdxOEKqav00ZQlG4owt';
+    @Input() stripeKey: string;
     @Input() payButtonText = 'Pay';
-    @Output() createPaymentIntent: EventEmitter<void> = new EventEmitter();
+    @Input() elementOptions: ElementsOptions;
+    @Output() pay: EventEmitter<void> = new EventEmitter();
     @Output() paymentSucceeded: EventEmitter<void> = new EventEmitter();
     @Output() paymentFailed: EventEmitter<stripe.Error> = new EventEmitter();
 
@@ -37,27 +40,24 @@ export class StripeElementsComponent implements OnInit, AfterViewInit, OnDestroy
     cardExpiryError: stripe.Error;
 
     constructor(public service: StripeElementsService) {
-        console.log(service);
     }
 
     ngOnInit() {
+        if (!this.stripeKey) {
+            this.stripeKey = this.service.stripeKey;
+        }
 
+        if (!this.elementOptions) {
+            this.elementOptions = this.service.elementsOptions;
+        }
     }
 
     private init() {
         this.stripe = Stripe(this.stripeKey);
         this.elements = this.stripe.elements();
-        const style = {
-            base: {
-                lineHeight: '24px',
-                fontFamily: 'monospace',
-                fontSmoothing: 'antialiased',
-                fontSize: '19px',
-            }
-        };
-        this.mountCardNumber({style});
-        this.mountCardCvc({style});
-        this.mountCardExpiry({style});
+        this.mountCardNumber(this.elementOptions);
+        this.mountCardCvc(this.elementOptions);
+        this.mountCardExpiry(this.elementOptions);
     }
 
     ngAfterViewInit() {
@@ -158,19 +158,23 @@ export class StripeElementsComponent implements OnInit, AfterViewInit, OnDestroy
         }
     }
 
-    public async confirmCardPayment(clientSecret: string, confirmCardPaymentData: ConfirmCardPaymentData) {
+    public async confirmCardPayment(paymentIntent: PaymentIntent, confirmCardPaymentData?: ConfirmCardPaymentData):
+        Promise<PaymentIntentResponse> {
         try {
-            const result = await this.stripe.confirmCardPayment(clientSecret, confirmCardPaymentData);
-            const paymentIntent = result.paymentIntent;
+            return await this.stripe.confirmCardPayment(paymentIntent.client_secret, {
+                ...confirmCardPaymentData,
+                payment_method: {
+                    card: this.cardNumberElement
+                }
+            });
         } catch (e) {
-            if (e) {
-            }
+            return null;
         }
     }
 
 
     onSubmit() {
-        this.createPaymentIntent.emit();
+        this.pay.emit();
     }
 
 }

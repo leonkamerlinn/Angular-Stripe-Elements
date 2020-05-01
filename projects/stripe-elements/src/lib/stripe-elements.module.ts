@@ -3,10 +3,13 @@ import { StripeElementsComponent } from './stripe-elements.component';
 import { StripeElementsService } from './stripe-elements.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import ElementsOptions = stripe.elements.ElementsOptions;
 
 
 export interface StripeElementsConfig {
     stripeKey: string;
+    api: string;
+    elementOptions?: ElementsOptions;
 }
 
 export const StripeElementsConfigService = new InjectionToken<StripeElementsConfig>('StripeElementsConfig');
