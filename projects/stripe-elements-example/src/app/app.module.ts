@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { StripeElementsConfig, StripeElementsModule } from 'stripe-elements';
 import { environment } from '../environments/environment';
 import ElementsOptions = stripe.elements.ElementsOptions;
+import {HttpClientModule} from '@angular/common/http';
 
 const style = {
     base: {
@@ -17,7 +18,6 @@ const style = {
 
 const elementsOptions: ElementsOptions = {
     style,
-    placeholderCountry: 'es'
 };
 const stripeConfig: StripeElementsConfig = {
     stripeKey: environment.stripeKey,
@@ -31,6 +31,7 @@ const stripeConfig: StripeElementsConfig = {
     ],
     imports: [
         BrowserModule,
+        HttpClientModule,
         StripeElementsModule.forRoot(stripeConfig)
     ],
     providers: [],
