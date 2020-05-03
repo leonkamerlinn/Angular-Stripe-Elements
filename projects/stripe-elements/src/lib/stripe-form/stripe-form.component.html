@@ -1,1 +1,31 @@
-<p>stripe-form works!</p>
+<form class="checkout" (ngSubmit)="onSubmit()">
+    <div #paymentRequestButtonRef></div>
+    <div class="form-row">
+        <label for="card-info">Card number</label>
+        <div id="card-info" #cardNumberRef></div>
+
+
+        <div class="container">
+            <div class="item cvc">
+                <label for="cvc">CVC</label>
+                <div id="cvc" #cardCvcRef></div>
+            </div>
+
+            <div class="item expiry">
+                <label for="expiry">Expiry</label>
+                <div id="expiry" #cardExpiryRef></div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="alert" *ngIf="cardNumberError">{{cardNumberError.message}}</div>
+    <div class="alert" *ngIf="cardCvcError">{{cardCvcError.message}}</div>
+    <div class="alert" *ngIf="cardExpiryError">{{cardExpiryError.message}}</div>
+
+    <button [disabled]="cardNumberError || cardCvcError || cardExpiryError" type="submit">{{payButtonText}}</button>
+</form>
+
+

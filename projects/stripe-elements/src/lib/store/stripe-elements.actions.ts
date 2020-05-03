@@ -1,8 +1,8 @@
 import { Action } from '@ngrx/store';
-import { StripeElementsComponent } from '../stripe-elements.component';
 import PaymentIntent = stripe.paymentIntents.PaymentIntent;
 import ConfirmCardPaymentData = stripe.ConfirmCardPaymentData;
 import PaymentIntentResponse = stripe.PaymentIntentResponse;
+import { StripeFormComponent } from '../stripe-form/stripe-form.component';
 
 
 export enum StripeElementsActionTypes {
@@ -18,7 +18,7 @@ export enum StripeElementsActionTypes {
 export class StripePay implements Action {
     readonly type = StripeElementsActionTypes.STRIPE_PAY;
 
-    constructor(public payload: any, public stripeElements: StripeElementsComponent, public paymentData?: ConfirmCardPaymentData) {
+    constructor(public payload: any, public stripeElements: StripeFormComponent, public paymentData?: ConfirmCardPaymentData) {
     }
 }
 
@@ -39,14 +39,14 @@ export class StripePayFail implements Action {
 export class CreatePaymentIntent implements Action {
     readonly type = StripeElementsActionTypes.CREATE_PAYMENT_INTENT;
 
-    constructor(public payload: any, stripeElements: StripeElementsComponent) {
+    constructor(public payload: any, stripeElements: StripeFormComponent) {
     }
 }
 
 export class CreatePaymentIntentSuccess implements Action {
     readonly type = StripeElementsActionTypes.CREATE_PAYMENT_INTENT_SUCCESS;
 
-    constructor(public payload: PaymentIntent, public stripeElements: StripeElementsComponent, public paymentData?:
+    constructor(public payload: PaymentIntent, public stripeElements: StripeFormComponent, public paymentData?:
         ConfirmCardPaymentData) {
     }
 }

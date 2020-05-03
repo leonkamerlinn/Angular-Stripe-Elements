@@ -1,5 +1,4 @@
 import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
-import { StripeElementsComponent } from './stripe-elements.component';
 import { StripeElementsService } from './stripe-elements.service';
 import { CommonModule } from '@angular/common';
 import ElementsOptions = stripe.elements.ElementsOptions;
@@ -14,9 +13,9 @@ export interface StripeElementsConfig {
 export const StripeElementsConfigService = new InjectionToken<StripeElementsConfig>('StripeElementsConfig');
 
 @NgModule({
-    declarations: [StripeElementsComponent],
+    declarations: [],
     imports: [CommonModule],
-    exports: [StripeElementsComponent]
+    exports: []
 })
 export class StripeElementsModule {
     static forRoot(config: StripeElementsConfig): ModuleWithProviders {
