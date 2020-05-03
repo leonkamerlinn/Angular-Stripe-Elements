@@ -11,7 +11,8 @@ export const initialState: StripeFormContainerState = {
     error: undefined,
 };
 
-export function stripeElementsReducer(state: StripeFormContainerState = initialState, action: StripeElementsActions): StripeFormContainerState {
+export function stripeElementsReducer(state: StripeFormContainerState = initialState, action:
+    StripeElementsActions): StripeFormContainerState {
     switch (action.type) {
         default:
             return state;

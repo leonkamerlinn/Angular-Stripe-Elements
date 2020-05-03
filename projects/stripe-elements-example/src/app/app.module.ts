@@ -5,7 +5,8 @@ import { AppComponent } from './app.component';
 import { StripeElementsConfig, StripeElementsModule } from 'stripe-elements';
 import { environment } from '../environments/environment';
 import ElementsOptions = stripe.elements.ElementsOptions;
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { StripeFormModule } from '../../../stripe-elements/src/lib/stripe-form/stripe-form.module';
 
 const style = {
     base: {
@@ -32,7 +33,8 @@ const stripeConfig: StripeElementsConfig = {
     imports: [
         BrowserModule,
         HttpClientModule,
-        StripeElementsModule.forRoot(stripeConfig)
+        StripeElementsModule.forRoot(stripeConfig),
+        StripeFormModule
     ],
     providers: [],
     bootstrap: [AppComponent]

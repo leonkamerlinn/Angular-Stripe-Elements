@@ -24,6 +24,7 @@ export class StripePay implements Action {
 
 export class StripePaySuccess implements Action {
     readonly type = StripeElementsActionTypes.STRIPE_PAY_SUCCESS;
+
     constructor(public payload: PaymentIntentResponse) {
     }
 }
@@ -45,7 +46,8 @@ export class CreatePaymentIntent implements Action {
 export class CreatePaymentIntentSuccess implements Action {
     readonly type = StripeElementsActionTypes.CREATE_PAYMENT_INTENT_SUCCESS;
 
-    constructor(public payload: PaymentIntent, public stripeElements: StripeElementsComponent, public paymentData?: ConfirmCardPaymentData) {
+    constructor(public payload: PaymentIntent, public stripeElements: StripeElementsComponent, public paymentData?:
+        ConfirmCardPaymentData) {
     }
 }
 
