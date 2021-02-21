@@ -23,9 +23,9 @@ export class StripeFormComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() stripeKey: string;
     @Input() payButtonText = 'Pay';
     @Input() elementOptions: ElementsOptions;
-    @Output() pay: EventEmitter<void> = new EventEmitter();
     @Output() paymentSucceeded: EventEmitter<void> = new EventEmitter();
     @Output() paymentFailed: EventEmitter<stripe.Error> = new EventEmitter();
+    @Input() paymentOptions: any;
 
     private stripe: stripe.Stripe;
     private cardNumberElement: stripe.elements.Element;
@@ -39,7 +39,7 @@ export class StripeFormComponent implements OnInit, AfterViewInit, OnDestroy {
     cardCvcError: stripe.Error;
     cardExpiryError: stripe.Error;
 
-    constructor(public service: StripeElementsService) {
+    constructor(private service: StripeElementsService) {
     }
 
     ngOnInit() {
@@ -50,6 +50,8 @@ export class StripeFormComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!this.elementOptions) {
             this.elementOptions = this.service.elementsOptions;
         }
+
+        this.init();
     }
 
     private init() {
@@ -58,6 +60,8 @@ export class StripeFormComponent implements OnInit, AfterViewInit, OnDestroy {
         this.mountCardNumber(this.elementOptions);
         this.mountCardCvc(this.elementOptions);
         this.mountCardExpiry(this.elementOptions);
+
+
     }
 
     ngAfterViewInit() {
@@ -158,8 +162,7 @@ export class StripeFormComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    public async confirmCardPayment(paymentIntent: PaymentIntent, confirmCardPaymentData?: ConfirmCardPaymentData):
-        Promise<PaymentIntentResponse> {
+    public async confirmCardPayment(paymentIntent: PaymentIntent, confirmCardPaymentData?: ConfirmCardPaymentData): Promise<PaymentIntentResponse> {
         try {
             return await this.stripe.confirmCardPayment(paymentIntent.client_secret, {
                 ...confirmCardPaymentData,
@@ -173,8 +176,15 @@ export class StripeFormComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
 
-    onSubmit() {
-        this.pay.emit();
+    async pay() {
+        try {
+            const paymentIntent = await this.service.createPaymentIntent(this.paymentOptions).toPromise();
+            await this.confirmCardPayment(paymentIntent);
+
+        } catch (e) {
+
+        }
+
     }
 
 }

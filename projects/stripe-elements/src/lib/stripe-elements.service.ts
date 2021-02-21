@@ -3,6 +3,7 @@ import { StripeElementsConfig, StripeElementsConfigService } from './stripe-elem
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import ElementsOptions = stripe.elements.ElementsOptions;
+import PaymentIntent = stripe.paymentIntents.PaymentIntent;
 
 @Injectable({
     providedIn: 'root'
@@ -20,7 +21,7 @@ export class StripeElementsService {
     }
 
 
-    createPaymentIntent(payload: any): Observable<any> {
-        return this.http.post(`${ this.config.api }/intents`, payload);
+    createPaymentIntent(payload: any): Observable<PaymentIntent> {
+        return this.http.post<PaymentIntent>(`${ this.config.api }/intents`, payload);
     }
 }
